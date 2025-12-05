@@ -11,6 +11,7 @@ This project was implemented as a take-home exercise, focusing on:
 ---
 
 ## 🧱 High-Level Architecture
+```text
 Client (curl / browser / automated tests)
                    │
                    ▼
@@ -34,23 +35,6 @@ Client (curl / browser / automated tests)
             SQLite Database (vehicles.db)
      - Lightweight persistent storage for vehicles
 
-```text
-        Client (curl / browser / tests)
-                   │
-                   ▼
-           FastAPI Application
-               (app/main.py)
-                   │
-                   ▼
-             CRUD Layer (app/crud.py)
-        (pure DB operations / business logic)
-                   │
-                   ▼
- SQLAlchemy ORM Models & DB Session Management
-     (app/models.py + app/database.py)
-                   │
-                   ▼
-        SQLite Database File (vehicles.db)
 
 - FastAPI handles HTTP routing, validation, and responses.
 
@@ -62,25 +46,32 @@ Client (curl / browser / automated tests)
 
 ---
 
-## Repository Structure
+Repository Structure
 
-1. app/  
-   This folder holds all application source code:
-   - database configuration  
-   - SQLAlchemy models  
-   - Pydantic schemas  
-   - CRUD (database logic)  
-   - FastAPI route definitions  
+app/ -> This folder holds all application source code
+main.py : Defines all API endpoints (POST, GET, PUT, DELETE) using FastAPI and connects them to the CRUD layer.
 
-2. test/  
-   This folder contains the automated test suite that uses pytest + TestClient.
+crud.py : Contains all database-facing logic (create, read, update, delete) using the VehicleRepository class.
+
+models.py : Defines the SQLAlchemy ORM model (`Vehicle`) representing the `vehicles` table.
+
+schemas.py : Defines Pydantic models used for request validation and response serialization.
+
+database.py : Configures the SQLite database, creates the engine/session, and provides the `get_db` dependency used by FastAPI.
+
+tests/
+unit/ -> unit tests
+Contains isolated unit tests for CRUD operations—no FastAPI, only direct function-level testing.
+
+component/ -> api tests
+Contains component/integration tests that simulate real API calls using `TestClient` and a temporary SQLite database.
 
 Other important top-level files:
 - requirements.txt → lists all dependencies
 - README.md → project documentation
 - pytest.ini → pytest configuration
 
-## 🚀 Getting Started
+🚀 Getting Started
 
 Follow these steps to set up and run the Vehicle API locally.
 
