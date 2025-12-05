@@ -11,6 +11,28 @@ This project was implemented as a take-home exercise, focusing on:
 ---
 
 ## 🧱 High-Level Architecture
+Client (curl / browser / automated tests)
+                   │
+                   ▼
+           FastAPI Application
+               (app/main.py)
+     - Handles routing, validation, dependency injection
+     - Converts Python objects ↔ JSON responses
+                   │
+                   ▼
+        Service / CRUD Layer (app/crud.py)
+     - Encapsulates business logic and data operations
+     - Interacts with the database via SQLAlchemy ORM
+                   │
+                   ▼
+ SQLAlchemy Models & DB Session Management
+    (app/models.py + app/database.py)
+     - Defines database tables and fields
+     - Manages DB engine, sessions, and connections
+                   │
+                   ▼
+            SQLite Database (vehicles.db)
+     - Lightweight persistent storage for vehicles
 
 ```text
         Client (curl / browser / tests)
@@ -64,7 +86,7 @@ Follow these steps to set up and run the Vehicle API locally.
 
 ---
 
-### 1️⃣ **Clone the repository**
+### 1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/your-username/apollo-takehome.git
