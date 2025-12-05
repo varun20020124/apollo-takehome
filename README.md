@@ -11,7 +11,7 @@ This project was implemented as a take-home exercise, focusing on:
 ---
 
 ## 🧱 High-Level Architecture
-```text
+
 Client (curl / browser / automated tests)
                    │
                    ▼
