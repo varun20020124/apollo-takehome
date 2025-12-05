@@ -71,29 +71,84 @@ Other important top-level files:
 - README.md → project documentation
 - pytest.ini → pytest configuration
 
-🚀 Getting Started
+## 🚀 Getting Started
 
-Follow these steps to set up and run the Vehicle API locally.
+Follow the steps below to set up and run the project locally.
 
 ---
 
-1️⃣ Clone the repository
+### 1️⃣ Clone the Repository
 
-git clone https://github.com/your-username/apollo-takehome.git
+git clone https://github.com/varun20020124/apollo-takehome.git
 cd apollo-takehome
 
-2️⃣ Create virtual environment and install requirements
+---
+
+### 2️⃣ Create & Activate a Virtual Environment (recommended)
+
+# Create a venv
 python3 -m venv venv
-source venv/bin/activate     # Mac/Linux
-venv\Scripts\activate        # Windows
+
+# Activate it (macOS / Linux)
+source venv/bin/activate
+
+# Activate it (Windows)
+venv\Scripts\activate
+
+---
+
+### 3️⃣ Install Dependencies
 
 pip install -r requirements.txt
 
-3️⃣ Initialize the database
+---
 
-This project uses SQLite. 
-
-4️⃣ Run the API and test suite
+### 4️⃣ Run the FastAPI Application
 
 uvicorn app.main:app --reload
+
+The API will now be available at:
+
+http://127.0.0.1:8000
+
+Interactive Swagger docs:
+http://127.0.0.1:8000/docs
+
+---
+
+### 5️⃣ Run the Test Suite
+
 pytest -q
+
+This will execute:
+- Unit tests (tests/unit/)
+- Component tests (tests/component/)
+
+---
+
+### 6️⃣ Project Structure Overview
+
+app/
+  - main.py → FastAPI routes & API layer
+  - crud.py → Database operations & business logic (OOP repository pattern)
+  - models.py → SQLAlchemy ORM models
+  - schemas.py → Pydantic request/response validation schemas
+  - database.py → Engine, session factory, Base class
+
+tests/
+  - unit/ → Unit tests for CRUD logic (pure Python + DB)
+  - component/ → Full API-level tests using TestClient
+
+requirements.txt → All required Python dependencies
+
+---
+
+### 7️⃣ Running Example Requests
+
+Create a vehicle:
+curl -X POST "http://127.0.0.1:8000/vehicle" -H "Content-Type: application/json" -d '{"vin":"A1","manufacturer_name":"Tesla","description":"Sedan","horse_power":300,"model_name":"Model S","model_year":2022,"purchase_price":89999,"fuel_type":"Electric"}'
+
+Get all vehicles:
+curl http://127.0.0.1:8000/vehicle
+
+
