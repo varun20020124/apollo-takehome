@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env/
+
+# SQLite databases
+*.db
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# Pytest cache
+.pytest_cache/
+
+# Uvicorn / logs
+*.log
+
+# MacOS junk
+.DS_Store
