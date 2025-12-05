@@ -9,7 +9,7 @@ This project was implemented as a take-home exercise, focusing on:
 - Automated tests runnable from the command line
 
 ---
-
+```text
 ## 🧱 High-Level Architecture
 
 Client (curl / browser / automated tests)
@@ -140,15 +140,3 @@ tests/
   - component/ → Full API-level tests using TestClient
 
 requirements.txt → All required Python dependencies
-
----
-
-### 7️⃣ Running Example Requests
-
-Create a vehicle:
-curl -X POST "http://127.0.0.1:8000/vehicle" -H "Content-Type: application/json" -d '{"vin":"A1","manufacturer_name":"Tesla","description":"Sedan","horse_power":300,"model_name":"Model S","model_year":2022,"purchase_price":89999,"fuel_type":"Electric"}'
-
-Get all vehicles:
-curl http://127.0.0.1:8000/vehicle
-
-
