@@ -3,9 +3,9 @@ from sqlalchemy.orm import sessionmaker
 from app.database import Base
 from app import crud, schemas
 
-# ---------------------------------------------------------------------
+
 # Use a separate SQLite database file for update unit tests
-# ---------------------------------------------------------------------
+
 engine = create_engine("sqlite:///./unit_update.db", connect_args={"check_same_thread": False})
 TestingSession = sessionmaker(bind=engine)
 
@@ -14,9 +14,8 @@ Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 
-# ---------------------------------------------------------------------
 # Helper to insert a sample vehicle
-# ---------------------------------------------------------------------
+
 def setup_sample():
     db = TestingSession()
     repo = crud.VehicleRepository(db)
@@ -36,9 +35,9 @@ def setup_sample():
     return db, repo
 
 
-# ---------------------------------------------------------------------
+
 # Test UPDATE logic
-# ---------------------------------------------------------------------
+
 def test_update_vehicle():
     db, repo = setup_sample()
 

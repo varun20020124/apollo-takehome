@@ -4,20 +4,19 @@ from . import models, schemas
 
 class VehicleRepository:
     """
-    A small repository class that encapsulates all database operations
-    related to the Vehicle entity.
-
-    This keeps DB logic in one place and makes it easier to understand,
-    test, and extend later.
+    Repository class that encapsulates all database operations
+    for Vehicle objects.
     """
 
     def __init__(self, db: Session):
-        self.db = db
+        self.db = db  # database session
 
-    def _normalize_vin(self, vin: str) -> str: # helper to normalise vin
+    def _normalize_vin(self, vin: str) -> str:
+        """Normalize VIN input for consistent DB lookups."""
         return vin.strip().upper()
 
-    def get(self, vin: str): # read single
+    def get(self, vin: str):
+        """Fetch a single vehicle by VIN."""
         norm_vin = self._normalize_vin(vin)
         return (
             self.db.query(models.Vehicle)
@@ -25,16 +24,17 @@ class VehicleRepository:
             .first()
         )
 
-    def list(self): # read all
+    def list(self):
+        """Return all vehicles in the database."""
         return self.db.query(models.Vehicle).all()
 
-    def create(self, vehicle: schemas.VehicleCreate): # create
+    def create(self, vehicle: schemas.VehicleCreate):
+        """Insert a new vehicle if VIN does not already exist."""
         norm_vin = self._normalize_vin(vehicle.vin)
 
-        # Check if VIN already exists (case-insensitive)
         existing = self.get(vehicle.vin)
         if existing:
-            return None  # main.py will raise 400
+            return None  # main.py will raise the HTTP 400
 
         new_vehicle = models.Vehicle(
             vin=norm_vin,
@@ -52,12 +52,13 @@ class VehicleRepository:
         self.db.refresh(new_vehicle)
         return new_vehicle
 
-    def update(self, vin: str, update_data: schemas.VehicleUpdate): # update
+    def update(self, vin: str, update_data: schemas.VehicleUpdate):
+        """Update fields of an existing vehicle."""
         vehicle = self.get(vin)
         if not vehicle:
             return None
 
-        update_dict = update_data.model_dump() # using model dump instead of dict just in case of update
+        update_dict = update_data.model_dump()
 
         for field, value in update_dict.items():
             setattr(vehicle, field, value)
@@ -66,7 +67,8 @@ class VehicleRepository:
         self.db.refresh(vehicle)
         return vehicle
 
-    def delete(self, vin: str): # delete
+    def delete(self, vin: str):
+        """Delete a vehicle by VIN."""
         vehicle = self.get(vin)
         if not vehicle:
             return None

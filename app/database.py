@@ -1,26 +1,31 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
+# SQLite database file used by the application
 DATABASE_URL = "sqlite:///./vehicles.db"
 
+# SQLAlchemy engine that manages the DB connection
 engine = create_engine(
     DATABASE_URL,
     connect_args={"check_same_thread": False},
 )
 
+
+# Factory that creates database sessions
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine,
 )
 
+# Base class for all SQLAlchemy ORM models
 Base = declarative_base()
 
 
-# Dependency injected into routes
+# Dependency that provides a database session to FastAPI routes
 def get_db():
     db = SessionLocal()
     try:
-        yield db
+        yield db # Makes the session available inside the request
     finally:
-        db.close()
+        db.close() # Ensures the session is closed after each request

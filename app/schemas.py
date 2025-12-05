@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
-# Base schema (shared attributes)
+# Shared fields across Create, Update, Response
 class VehicleBase(BaseModel):
     manufacturer_name: str
     description: Optional[str] = None
@@ -12,18 +12,19 @@ class VehicleBase(BaseModel):
     fuel_type: str
 
 
-# Schema for creating a vehicle (POST)
 class VehicleCreate(VehicleBase):
+    """Request body for creating a vehicle."""
     vin: str = Field(..., description="Unique Vehicle Identification Number")
 
-# Schema for updating a vehicle (PUT)
-# VIN is not included because it is passed in the URL path
+
 class VehicleUpdate(VehicleBase):
+    """Request body for updating a vehicle (VIN excluded)."""
     pass
 
-# Schema for API responses
+
 class VehicleResponse(VehicleBase):
+    """Response model returned to clients."""
     vin: str
 
     class Config:
-        from_attributes = True   # allows Pydantic to read SQLAlchemy models
+        from_attributes = True  # enables ORM → Pydantic conversion

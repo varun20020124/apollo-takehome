@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, Float
 from .database import Base
 
 class Vehicle(Base):
-    __tablename__ = "vehicles"
+    __tablename__ = "vehicles" # Name of the table in SQLite
 
     vin = Column(String, primary_key=True, index=True)
     manufacturer_name = Column(String, nullable=False)

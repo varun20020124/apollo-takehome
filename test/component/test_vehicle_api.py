@@ -202,4 +202,3 @@ def test_invalid_json_returns_422():
     )
 
     assert response.status_code == 422
-
