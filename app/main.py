@@ -1,3 +1,11 @@
+"""
+1. Defines all HTTP routes (POST, GET, PUT, DELETE) for the /vehicle API.
+2. Injects a database session using Depends(get_db) on every request.
+3. Uses VehicleRepository to perform business logic and DB operations.
+4. Raises appropriate HTTP errors (400, 404) using HTTPException.
+5. Controls the flow of request → validation → business logic → response.
+"""
+
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 

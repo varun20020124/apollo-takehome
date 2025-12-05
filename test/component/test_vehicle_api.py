@@ -1,3 +1,13 @@
+"""
+1. Use FastAPI’s TestClient to test the actual API endpoints.
+2. Override the DB dependency so tests run with a temporary DB.
+3. Validate:
+Full request → response cycle
+Error handling (400, 404, 422)
+JSON validation
+Duplicate VIN logic
+Success paths and failure paths
+"""
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine

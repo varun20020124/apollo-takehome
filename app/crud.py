@@ -1,3 +1,9 @@
+"""
+1. Implements the VehicleRepository class for clean CRUD operations.
+2. Normalizes VIN (uppercase) before any DB interaction.
+3. Provides get(), list(), create(), update(), delete() methods.
+4. Encapsulates all DB logic so routes stay clean and modular.
+"""
 from sqlalchemy.orm import Session
 from . import models, schemas
 

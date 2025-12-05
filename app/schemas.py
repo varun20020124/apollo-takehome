@@ -1,3 +1,10 @@
+"""
+1. Defines request/response validation rules.
+2. VehicleCreate → required fields for POST (includes VIN).
+3. VehicleUpdate → updatable fields for PUT (VIN excluded).
+4. VehicleResponse → what the API returns.
+5. Ensures type validation and clean API responses.
+"""
 from pydantic import BaseModel, Field
 from typing import Optional
 

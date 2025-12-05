@@ -1,3 +1,9 @@
+"""
+1. Creates the SQLite engine (vehicles.db) with SQLAlchemy.
+2. Creates a SessionLocal factory used to open/close DB sessions.
+3. Provides the get_db() dependency used in FastAPI routes.
+4. Defines Base = declarative_base() for SQLAlchemy models to inherit.
+"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
@@ -28,4 +34,4 @@ def get_db():
     try:
         yield db # Makes the session available inside the request
     finally:
-        db.close() # Ensures the session is closed after each request
+        db.close() 

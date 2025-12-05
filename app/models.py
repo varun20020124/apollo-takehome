@@ -1,3 +1,8 @@
+"""
+1. Defines the Vehicle model, mapping Python attributes → SQL table columns.
+2. Controls how data is stored in the vehicles table.
+3. Enforces DB-level structure (types, nullable fields, primary key on VIN).
+"""
 from sqlalchemy import Column, String, Integer, Float
 from .database import Base
 
