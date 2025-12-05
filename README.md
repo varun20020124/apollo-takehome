@@ -10,7 +10,7 @@ This project was implemented as a take-home exercise, focusing on:
 
 ---
 ```text
-## 🧱 High-Level Architecture
+🧱 High-Level Architecture
 
 Client (curl / browser / automated tests)
                    │
@@ -71,20 +71,20 @@ Other important top-level files:
 - README.md → project documentation
 - pytest.ini → pytest configuration
 
-## 🚀 Getting Started
+🚀 Getting Started
 
 Follow the steps below to set up and run the project locally.
 
 ---
 
-### 1️⃣ Clone the Repository
+1️⃣ Clone the Repository
 
 git clone https://github.com/varun20020124/apollo-takehome.git
 cd apollo-takehome
 
 ---
 
-### 2️⃣ Create & Activate a Virtual Environment (recommended)
+2️⃣ Create & Activate a Virtual Environment (recommended)
 
 # Create a venv
 python3 -m venv venv
@@ -97,13 +97,13 @@ venv\Scripts\activate
 
 ---
 
-### 3️⃣ Install Dependencies
+3️⃣ Install Dependencies
 
 pip install -r requirements.txt
 
 ---
 
-### 4️⃣ Run the FastAPI Application
+4️⃣ Run the FastAPI Application
 
 uvicorn app.main:app --reload
 
@@ -116,7 +116,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-### 5️⃣ Run the Test Suite
+5️⃣ Run the Test Suite
 
 pytest -q
 
@@ -126,7 +126,7 @@ This will execute:
 
 ---
 
-### 6️⃣ Project Structure Overview
+6️⃣ Project Structure Overview
 
 app/
   - main.py → FastAPI routes & API layer
