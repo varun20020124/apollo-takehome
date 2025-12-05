@@ -77,27 +77,23 @@ Follow these steps to set up and run the Vehicle API locally.
 
 ---
 
-### 1️⃣ Clone the repository
+1️⃣ Clone the repository
 
-```bash
 git clone https://github.com/your-username/apollo-takehome.git
 cd apollo-takehome
 
-### 2️⃣ **Create virtual environment and install requirements**
+2️⃣ Create virtual environment and install requirements
 python3 -m venv venv
 source venv/bin/activate     # Mac/Linux
-# OR
 venv\Scripts\activate        # Windows
 
 pip install -r requirements.txt
 
-### 3️⃣ **Initialize the database**
+3️⃣ Initialize the database
 
-This project uses SQLite. The database file (vehicles.db) is automatically created when the API runs.
+This project uses SQLite. 
 
-If you want to reset it run rm vehicles.db
-
-### 4️⃣ **Run the API and test suite**
+4️⃣ Run the API and test suite
 
 uvicorn app.main:app --reload
 pytest -q
