@@ -1,66 +1,76 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 
-# CREATE
-def create_vehicle(db: Session, vehicle: schemas.VehicleCreate):
-    # Convert VIN to uppercase for consistency
-    vin = vehicle.vin.upper()
 
-    # Check if VIN already exists
-    db_vehicle = db.query(models.Vehicle).filter(models.Vehicle.vin == vin).first()
-    if db_vehicle:
-        return None  # main.py will handle the error
+class VehicleRepository:
+    """
+    A small repository class that encapsulates all database operations
+    related to the Vehicle entity.
 
-    new_vehicle = models.Vehicle(
-        vin=vin,
-        manufacturer_name=vehicle.manufacturer_name,
-        description=vehicle.description,
-        horse_power=vehicle.horse_power,
-        model_name=vehicle.model_name,
-        model_year=vehicle.model_year,
-        purchase_price=vehicle.purchase_price,
-        fuel_type=vehicle.fuel_type
-    )
-    db.add(new_vehicle)
-    db.commit()
-    db.refresh(new_vehicle)
-    return new_vehicle
+    This keeps DB logic in one place and makes it easier to understand,
+    test, and extend later.
+    """
 
-# READ (GET ALL)
-def get_all_vehicles(db: Session):
-    return db.query(models.Vehicle).all()
+    def __init__(self, db: Session):
+        self.db = db
 
-# # READ (GET BY VIN)
-# def get_vehicle_by_vin(db: Session, vin: str):
-#     return db.query(models.Vehicle).filter(models.Vehicle.vin == vin.upper()).first()
+    def _normalize_vin(self, vin: str) -> str: # helper to normalise vin
+        return vin.strip().upper()
 
-# READ (GET BY VIN)
-def get_vehicle_by_vin(db: Session, vin: str):
-    return db.query(models.Vehicle).filter(models.Vehicle.vin == vin.upper()).first()
+    def get(self, vin: str): # read single
+        norm_vin = self._normalize_vin(vin)
+        return (
+            self.db.query(models.Vehicle)
+            .filter(models.Vehicle.vin == norm_vin)
+            .first()
+        )
 
-# wrapper so main.py and tests can call crud.get_vehicle()
-def get_vehicle(db: Session, vin: str):
-    return get_vehicle_by_vin(db, vin)
+    def list(self): # read all
+        return self.db.query(models.Vehicle).all()
 
-# UPDATE
-def update_vehicle(db: Session, vin: str, update_data: schemas.VehicleUpdate):
-    db_vehicle = get_vehicle_by_vin(db, vin)
-    if not db_vehicle:
-        return None
+    def create(self, vehicle: schemas.VehicleCreate): # create
+        norm_vin = self._normalize_vin(vehicle.vin)
 
-    for field, value in update_data.dict().items():
-        setattr(db_vehicle, field, value)
+        # Check if VIN already exists (case-insensitive)
+        existing = self.get(vehicle.vin)
+        if existing:
+            return None  # main.py will raise 400
 
-    db.commit()
-    db.refresh(db_vehicle)
-    return db_vehicle
+        new_vehicle = models.Vehicle(
+            vin=norm_vin,
+            manufacturer_name=vehicle.manufacturer_name,
+            description=vehicle.description,
+            horse_power=vehicle.horse_power,
+            model_name=vehicle.model_name,
+            model_year=vehicle.model_year,
+            purchase_price=vehicle.purchase_price,
+            fuel_type=vehicle.fuel_type,
+        )
 
-# DELETE
-def delete_vehicle(db: Session, vin: str):
-    db_vehicle = get_vehicle_by_vin(db, vin)
-    if not db_vehicle:
-        return None
+        self.db.add(new_vehicle)
+        self.db.commit()
+        self.db.refresh(new_vehicle)
+        return new_vehicle
 
-    db.delete(db_vehicle)
-    db.commit()
-    return True
+    def update(self, vin: str, update_data: schemas.VehicleUpdate): # update
+        vehicle = self.get(vin)
+        if not vehicle:
+            return None
+
+        update_dict = update_data.model_dump() # using model dump instead of dict just in case of update
+
+        for field, value in update_dict.items():
+            setattr(vehicle, field, value)
+
+        self.db.commit()
+        self.db.refresh(vehicle)
+        return vehicle
+
+    def delete(self, vin: str): # delete
+        vehicle = self.get(vin)
+        if not vehicle:
+            return None
+
+        self.db.delete(vehicle)
+        self.db.commit()
+        return True

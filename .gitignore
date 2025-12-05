@@ -8,6 +8,7 @@ venv/
 
 # SQLite databases
 *.db
+*.sqlite
 *.sqlite3
 
 # VS Code
