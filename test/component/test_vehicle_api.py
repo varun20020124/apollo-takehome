@@ -1,5 +1,6 @@
+# Component/API Tests
 """
-1. Use FastAPI’s TestClient to test the actual API endpoints.
+1. Use FastAPI TestClient to test the actual API endpoints.
 2. Override the DB dependency so tests run with a temporary DB.
 3. Validate:
 Full request → response cycle

@@ -1,3 +1,5 @@
+# Contains the VehicleRepository class, which encapsulates all DB operations and 
+# Centralises data access logic 
 """
 1. Implements the VehicleRepository class for clean CRUD operations.
 2. Normalizes VIN (uppercase) before any DB interaction.

@@ -1,3 +1,4 @@
+# FastAPI application
 """
 1. Defines all HTTP routes (POST, GET, PUT, DELETE) for the /vehicle API.
 2. Injects a database session using Depends(get_db) on every request.

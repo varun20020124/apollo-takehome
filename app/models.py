@@ -1,3 +1,4 @@
+# ORM model
 """
 1. Defines the Vehicle model, mapping Python attributes → SQL table columns.
 2. Controls how data is stored in the vehicles table.
@@ -17,3 +18,4 @@ class Vehicle(Base):
     model_year = Column(Integer, nullable=False)
     purchase_price = Column(Float, nullable=False)
     fuel_type = Column(String, nullable=False)
+    color  = Column(String, nullable=False)

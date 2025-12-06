@@ -1,3 +1,4 @@
+# Request & Reponse model
 """
 1. Defines request/response validation rules.
 2. VehicleCreate → required fields for POST (includes VIN).

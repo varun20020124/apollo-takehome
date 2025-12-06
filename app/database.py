@@ -1,3 +1,4 @@
+# Database setup
 """
 1. Creates the SQLite engine (vehicles.db) with SQLAlchemy.
 2. Creates a SessionLocal factory used to open/close DB sessions.
